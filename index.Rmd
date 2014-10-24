@@ -1,0 +1,56 @@
+---
+title       : Learning by Doing!
+subtitle    : 
+author      : James Wang
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Active Learning
+
+1. Human being retain information far better when actively doing vs. passively hearing
+2. Distributions are hard for many beginning students to understand
+3. An interactive, modifiable display of a distribution can give students great statistical intuition
+
+--- .class #id 
+
+## Impact on Retention
+
+Learning by doing is far better at creating retention after 2 weeks (Edgar Dale, 1946):
+
+```{r, echo=FALSE}
+act <- c("Reading", "Listening", "Looking/seeing", "Seeing and hearning", "Speaking", "Saying/Doing")
+Type <- c("Passive", "Passive", "Passive", "Passive", "Active", "Active")
+ret <- c(.1, .2, .3, .5, .7, .9)
+df <- data.frame(act, Type, ret)
+
+library(ggplot2)
+ggplot(df, aes(reorder(act, -ret), ret, fill=Type)) + 
+  geom_bar(stat="identity") +
+  xlab("Activity") +
+  ylab("Retention after 2 Weeks")
+```
+
+---
+
+## Distributions are Hard -- Try Predicting The Below
+
+```{r,warning=FALSE}
+# Poisson of lambda 1 vs. 20
+x1 <- rpois(n=1000, lambda=1); x2 <- rpois(n=1000, lambda=20); label1 <- as.factor(rep(1, times=1000)); label2 <- as.factor(rep(20, times=1000)); df1 <- data.frame(x1, label1); df2 <- data.frame(x2, label2); names(df1) <- c("data", "lambda"); names(df2) <- c("data", "lambda"); dftotal <- rbind (df1, df2)
+ggplot(dftotal, aes(data, fill=lambda)) + geom_bar(binwidth = diff(range(dftotal$data))/30)
+```
+
+---
+
+## Interactivity
+
+That last slide would have been much better with interactivity.
+
+Try the app [here](https://j-wang.shinyapps.io/shiny_app/)!
+
